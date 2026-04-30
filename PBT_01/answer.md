@@ -1,9 +1,10 @@
 Câu A1:
+
 1.Khi gõ https://shopee.vn vào trình duyệt và nhấn Enter, các bước xảy ra là:
 
 - Request xuất phát từ laptop đi qua router WiFi
 - Qua nhà mạng VNPT chạy xuyên cáp quang dưới đáy Thái Bình Dương
-- Đến data center của trụ sở shoppe
+- Đến data center của trụ sở shoppehttps://github.com/thuthuy18/CSE391_VuThuThuy_2451160836/edit/main/PBT_01/answer.md
 - Server xử lý request
 - Response chạy ngược lại: cáp quang - VNPT - router - laptop
 - Chrome nhận file HTML, CSS, JS - render ra giao diện và ta sẽ thấy trang của shoppe.
@@ -239,14 +240,14 @@ Câu C1:
 
 Câu C2:
 
-Theo như quan điểm đưa ra chỉ cần dùng <div> cho mọi thứ rồi thêm class là đủ thì có thể tiện lúc đầu, nhưng không phải cách làm tối ưu.Đầu tiên là về SEO. Google cần hiểu cấu trúc trang web để biết đâu là menu, đâu là nội dung chính, đâu là phần cuối trang. Nếu mọi thứ đều là <div>, công cụ tìm kiếm sẽ khó phân tích hơn. 
+Theo như quan điểm đưa ra chỉ cần dùng <div> cho mọi thứ rồi thêm class là đủ thì có thể tiện lúc đầu, nhưng không phải cách làm tối ưu.Đầu tiên là về SEO. Google cần hiểu cấu trúc trang web để biết đâu là menu, đâu là nội dung chính, đâu là phần cuối trang. Nếu mọi thứ đều là (div), công cụ tìm kiếm sẽ khó phân tích hơn. 
 
-Trong khi đó, các thẻ semantic như <header>, <nav>, <main>, <article>, <footer> giúp website rõ ràng và hỗ trợ SEO tốt hơn.
+Trong khi đó, các thẻ semantic như (header), (nav), (main), (article), (footer) giúp website rõ ràng và hỗ trợ SEO tốt hơn.
 
 Tiếp theo là về Accessibility. Người dùng khiếm thị thường sử dụng screen reader để truy cập web. Những công cụ này dựa vào semantic HTML để điều hướng nhanh đến từng khu vực. Ví dụ có thể chuyển thẳng đến <nav> để tìm menu hoặc <main> để đọc nội dung chính. Nếu chỉ dùng <div>, trải nghiệm sẽ bất tiện hơn.
 
-Ví dụ cụ thể: Một trang tin tức dùng <article> cho từng bài viết sẽ giúp Google hiểu đó là bài nội dung độc lập, đồng thời screen reader cũng dễ nhận diện từng bài hơn.
+Ví dụ cụ thể: Một trang tin tức dùng (article) cho từng bài viết sẽ giúp Google hiểu đó là bài nội dung độc lập, đồng thời screen reader cũng dễ nhận diện từng bài hơn.
 
-Tuy nhiên, <div> vẫn rất cần thiết trong thực tế. Nó phù hợp để chia layout, gom nhóm phần tử hoặc dùng với CSS Grid/Flexbox.
+Tuy nhiên, (div) vẫn rất cần thiết trong thực tế. Nó phù hợp để chia layout, gom nhóm phần tử hoặc dùng với CSS Grid/Flexbox.
 Vì vậy, semantic HTML nên dùng để tạo cấu trúc có nghĩa, còn <div> dùng để hỗ trợ bố cục. Kết hợp cả hai mới là cách làm hiệu quả nhất.
   
