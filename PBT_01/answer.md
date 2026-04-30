@@ -54,28 +54,35 @@ Câu A3:
 <div>Hộp 3</div>
 
 Đoạn code trên sẽ được mô tả như sau:
+
 |Hộp 1|  
 |Text A||Text B|  
 |Hộp 2|  
 |Text A||Text B|  
 |Hộp 3|
 
-+ <div> là thẻ block, nghĩa là nó chiếm nguyên một dòng riêng. Viết xong sẽ tự xuống dòng.
++ (div) là thẻ block, nghĩa là nó chiếm nguyên một dòng riêng. Viết xong sẽ tự xuống dòng.
 → Vì vậy Hộp 1, Hộp 2, Hộp 3 mỗi cái nằm một dòng.
-+ <span> là thẻ inline, nghĩa là chỉ chiếm phần chữ bên trong nó và không xuống dòng.
+
++ (span) là thẻ inline, nghĩa là chỉ chiếm phần chữ bên trong nó và không xuống dòng.
 → Vì vậy Text A và Text B nằm cùng một dòng.
-+ <strong> cũng là thẻ inline giống <span>, nhưng chữ sẽ in đậm.
+
++ (strong) cũng là thẻ inline giống <span>, nhưng chữ sẽ in đậm.
 → Vì vậy Text C và Text D vẫn nằm cùng dòng, chỉ khác là Text D đậm hơn.
+
 Nguồn tham khảo: (tuan_1_html5/02_basic_structure_html.md + phần: Các thẻ cơ bản trong <body>)
 
 Câu A4:
-Sự khác nhau giữa <thead>, <tbody>, <tfoot> là:
+Sự khác nhau giữa (thead), (tbody), (tfoot) là:
 
-<thead> là phần đầu của bảng, thường chứa tiêu đề các cột.
-<tbody> là phần thân bảng, chứa dữ liệu chính của bảng.
-<tfoot> là phần cuối bảng, thường dùng để ghi tổng kết hoặc tổng tiền.
+- (thead) là phần đầu của bảng, thường chứa tiêu đề các cột.
+- (tbody) là phần thân bảng, chứa dữ liệu chính của bảng.
+- (tfoot) là phần cuối bảng, thường dùng để ghi tổng kết hoặc tổng tiền.
+
 dù có xếp không đúng thứ tự 3 thẻ trên thì dữ liệu nó vẫn sẽ hiển thị theo thứ tự là <thead> -> <tbody> -> <tfoot>
+
 (tham chiếu tuan_1_html5/05_tables_hyperlinks.md + phần: Table bảng dữ liệu)
+
 Không nên dùng table cho việc làm layout là vì:
 - Sai semantic
 - Không tốt cho SEO và accessibility vì Google khó hiểu cấu trúc trang hơn semantic HTML
@@ -116,16 +123,25 @@ Câu B4:
 Em chọn website: thegioididong.com
 
 1. Ba thẻ semantic HTML5 mà trang web sử dụng:
-<header>: nằm ở đầu trang, chứa logo, menu, ô tìm kiếm.
-<footer>: nằm cuối trang, chứa thông tin liên hệ và chính sách.
-<section>: dùng để chia các khu vực nội dung như sản phẩm nổi bật, danh mục, tin tức.
+
++ (header): nằm ở đầu trang, chứa logo, menu, ô tìm kiếm.
++ (footer): nằm cuối trang, chứa thông tin liên hệ và chính sách.
++ (section): dùng để chia các khu vực nội dung như sản phẩm nổi bật, danh mục, tin tức.
+
 2. Hai chỗ chưa dùng semantic tốt (nếu có):
+
 Một số khối sản phẩm dùng nhiều <div> thay vì <article>.
+
 Một số khu menu dùng <div> thay vì <nav>.
+
 3. Table tìm được trên trang:
+
 Table dùng để hiển thị thông số kỹ thuật sản phẩm (ví dụ điện thoại, laptop).
+
 Có sử dụng <tbody>.
+
 Không thấy dùng <thead> rõ ràng ở một số bảng.
+
 Câu C1:
 
 <!-- phần đầu trang -->
@@ -222,9 +238,15 @@ Câu C1:
     </footer>
 
 Câu C2:
-Theo như quan điểm đưa ra chỉ cần dùng <div> cho mọi thứ rồi thêm class là đủ thì có thể tiện lúc đầu, nhưng không phải cách làm tối ưu.Đầu tiên là về SEO. Google cần hiểu cấu trúc trang web để biết đâu là menu, đâu là nội dung chính, đâu là phần cuối trang. Nếu mọi thứ đều là <div>, công cụ tìm kiếm sẽ khó phân tích hơn. Trong khi đó, các thẻ semantic như <header>, <nav>, <main>, <article>, <footer> giúp website rõ ràng và hỗ trợ SEO tốt hơn.
-Thứ hai là về Accessibility. Người dùng khiếm thị thường sử dụng screen reader để truy cập web. Những công cụ này dựa vào semantic HTML để điều hướng nhanh đến từng khu vực. Ví dụ có thể chuyển thẳng đến <nav> để tìm menu hoặc <main> để đọc nội dung chính. Nếu chỉ dùng <div>, trải nghiệm sẽ bất tiện hơn.
+
+Theo như quan điểm đưa ra chỉ cần dùng <div> cho mọi thứ rồi thêm class là đủ thì có thể tiện lúc đầu, nhưng không phải cách làm tối ưu.Đầu tiên là về SEO. Google cần hiểu cấu trúc trang web để biết đâu là menu, đâu là nội dung chính, đâu là phần cuối trang. Nếu mọi thứ đều là <div>, công cụ tìm kiếm sẽ khó phân tích hơn. 
+
+Trong khi đó, các thẻ semantic như <header>, <nav>, <main>, <article>, <footer> giúp website rõ ràng và hỗ trợ SEO tốt hơn.
+
+Tiếp theo là về Accessibility. Người dùng khiếm thị thường sử dụng screen reader để truy cập web. Những công cụ này dựa vào semantic HTML để điều hướng nhanh đến từng khu vực. Ví dụ có thể chuyển thẳng đến <nav> để tìm menu hoặc <main> để đọc nội dung chính. Nếu chỉ dùng <div>, trải nghiệm sẽ bất tiện hơn.
+
 Ví dụ cụ thể: Một trang tin tức dùng <article> cho từng bài viết sẽ giúp Google hiểu đó là bài nội dung độc lập, đồng thời screen reader cũng dễ nhận diện từng bài hơn.
+
 Tuy nhiên, <div> vẫn rất cần thiết trong thực tế. Nó phù hợp để chia layout, gom nhóm phần tử hoặc dùng với CSS Grid/Flexbox.
 Vì vậy, semantic HTML nên dùng để tạo cấu trúc có nghĩa, còn <div> dùng để hỗ trợ bố cục. Kết hợp cả hai mới là cách làm hiệu quả nhất.
   
