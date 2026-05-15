@@ -250,3 +250,6 @@ Ví dụ cụ thể: Một trang tin tức dùng (article) cho từng bài viế
 
 Tuy nhiên, (div) vẫn rất cần thiết trong thực tế. Nó phù hợp để chia layout, gom nhóm phần tử hoặc dùng với CSS Grid/Flexbox.
 Vì vậy, semantic HTML nên dùng để tạo cấu trúc có nghĩa, còn <div> dùng để hỗ trợ bố cục. Kết hợp cả hai mới là cách làm hiệu quả nhất.
+
+# Phần D - Video Thực hành OBS
+link gg drive phần video PBT_01 https://drive.google.com/file/d/1Kea9xzyyl9SkBNtW1x6YtFcOS3y-E-Rt/view?usp=sharing
