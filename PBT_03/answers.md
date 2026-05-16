@@ -206,7 +206,7 @@ vì CSS dùng MAargin Collapse khi 2 block nằm dọc nhau margin chạm nhau t
 
 1. Phần 1 — content-box vs border-box
 
-- Hộp 1 (content-box): chiều rộng thực tế = 350px (đo từ DevTools)
+- Hộp 1 (content-box): chiều rộng thực tế = 349,6px (đo từ DevTools)
 - Hộp 2 (border-box): chiều rộng thực tế = 300px (đo từ DevTools)
 
 Giải thích sự khác biệt:
@@ -216,17 +216,19 @@ Giải thích sự khác biệt:
 
 2. Phần 2 — Layout 3 cột
 
-Trường hợp KHÔNG dùng border-box (content-box):
-
-- Cột trái: 250 + 15×2 = 280px
-- Cột giữa: 500 + 20×2 = 540px
-- Cột phải: 250 + 15×2 = 280px
-- Tổng = 280 + 540 + 280 = 1100px → vượt quá container 1000px → layout vỡ
-
 Trường hợp CÓ dùng border-box:
 
 - Cột trái: đúng 250px
 - Cột giữa: đúng 500px
 - Cột phải: đúng 250px
-- Tổng = 250 + 500 + 250 = 1000px → vừa khít container → layout đúng
+- Tổng = 250 + 500 + 250 = 1000px (chuẩn) → vừa khít container → layout đúng
+
+
+Trường hợp KHÔNG dùng border-box (content-box):
+
+- Cột trái: 250 + 15×2 = 280px
+- Cột giữa: 500 + 20×2 = 540px
+- Cột phải: 250 + 15×2 = 280px
+- Tổng = 280 + 540 + 280 = 1100px > 1000px → vượt quá container → layout bị tràn , vỡ 
+
 
