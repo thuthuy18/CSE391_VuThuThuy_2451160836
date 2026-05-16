@@ -179,3 +179,6 @@ Cách 2 — `<figure>` + `<figcaption>`
 
 - Kẻ tấn công bypass hoàn toàn validation — dùng Postman gửi request thẳng lên server với dữ liệu giả mạo, độc hại như SQL injection mà không qua bất kỳ kiểm tra nào vì frontend bị bỏ qua hoàn toàn.
 - Dữ liệu rác và giả mạo tràn vào database — kẻ tấn công có thể tạo hàng nghìn tài khoản với CCCD giả, số tài khoản không tồn tại, hoặc inject mã độc vào các trường dữ liệu gây hỏng hệ thống, rò rỉ dữ liệu khách hàng khác.
+
+# Phần D - Video Thực hành OBS
+link gg drive phần video PBT_02 https://drive.google.com/file/d/1-LNYDu5WSDBIT8sUsWm9-IFSzTTUTyXJ/view?usp=drive_link
