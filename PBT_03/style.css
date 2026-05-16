@@ -1,0 +1,74 @@
+/* Reset & box-sizing */
+* {
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Header với gradient */
+header {
+    background: linear-gradient(90deg, #0066cc, #003366);
+    color: white;
+    padding: 20px;
+}
+
+/* Navigation links */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+nav a.active {
+    color: #00ffcc;
+    border-bottom: 2px solid #00ffcc;
+}
+
+/* Table kỹ năng */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 15px;
+}
+
+thead tr {
+    background-color: #333;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #d9edf7;
+}
+
+/* Footer */
+footer {
+    background-color: #222;
+    color: #aaa;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
