@@ -116,3 +116,79 @@ Home
 ```
 
 ShopTLU
+
+## Câu A3
+
+### Trường hợp 1 - content-box (mặc định)
+```css
+.box-1 {
+    width: 400px;
+    padding: 20px;
+    border: 5px solid black;
+    margin: 10px;
+}
+```
+content: width = 400px
+
+padding: trái 20px, phải 20px
+
+border: trái 5px, phải 5px
+
+-> chiều rộng hiển thị = 400 + 20 + 20 + 5 + 5 = 450px
+
+margin: trái 10px, phải 10px
+
+-> không gian chiếm trên trang: 450 + 20 = 470px
+
+### Trường hợp 2 = border-box
+```css
+.box-2 {
+    box-sizing: border-box;
+    width: 400px;
+    padding: 20px;
+    border: 5px solid black;
+    margin: 10px;
+}
+```
+width tổng: content+padding+border: 400px
+
+padding: 20+20 = 40px
+
+border: 5+5 = 10px
+
+-> content thực tế = 400 - 40 - 10 = 350px
+
+margin: 10+10 = 20px
+
+-> không gian chiếm trên trang: 400 + 20 = 420px
+
+### Trường hợp 3 - Margin collapse
+```css
+.box-a { margin-bottom: 25px; }
+.box-b { margin-top: 40px; }
+```
+-> khoảng cách giữa 2 box: 40px
+
+vì CSS dùng MAargin Collapse khi 2 block nằm dọc nhau margin chạm nhau thì brower chỉ lấy margin lớn hơn
+
+## Câu A4 — Specificity (Độ ưu tiên)
+
+1. Tính specificity score (a, b, c) cho mỗi rule
+
+- `p` → tag = 1 → (0, 0, 1)
+- `.price` → class = 1 → (0, 1, 0)
+- `#main-price` → ID = 1 → (1, 0, 0)
+- `p.price` → tag(1) + class(1) → (0, 1, 1)
+
+2. Element sẽ có màu gì? Giải thích
+
+- Element sẽ có màu đỏ do Specificity của `#main-price` là cao nhất nên thắng tất cả
+
+3. Nếu thêm `<p class="price" id="main-price" style="color: orange;">`, element có màu gì?
+
+- Element sẽ có màu cam do Specificity của `#style="color: orange` là (1,0,0,0) nên thắng tất cả
+
+4. Nếu Rule A thêm `!important`, element có màu gì? Tại sao?
+
+- Element sẽ có màu đen do `!important` có specificity vô cực — phá vỡ toàn bộ quy tắc thông thường
+
