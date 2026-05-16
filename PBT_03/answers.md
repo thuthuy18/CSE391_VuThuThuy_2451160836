@@ -232,3 +232,108 @@ Trường hợp KHÔNG dùng border-box (content-box):
 - Tổng = 280 + 540 + 280 = 1100px > 1000px → vượt quá container → layout bị tràn , vỡ 
 
 
+## Bài B3 — Specificity Battle
+
+1. Liệt kê 10 rules + specificity score
+
+-`p { color: red; }` - Specificity: (0,0,1) 
+-`body p { color: blue; }` - Specificity: (0,0,2) 
+-`.text { color: green; }` - Specificity: (0,1,0) 
+-`.highlight { color: orange; }` - Specificity: (0,1,0)
+-`p.text { color: purple; }` - Specificity: (0,1,1) 
+-`.text.highlight { color: brown; }` - Specificity: (0,2,0)
+-`#demo { color: pink; }` - Specificity:  (1,0,0)
+-`p#demo { color: deeppink; }` - Specificity: (1,0,1) 
+-`p#demo.highlight { color: navy; }` - Specificity: (1,1,1)
+-`p#demo.text.highlight { color: gold; }` - Specificity:  (1,2,1) ← mạnh nhất
+
+2. Element cuối cùng hiển thị màu gì? Tại sao?
+
+Màu hiển thị: `gold`
+Lý do: Rule số 10 (p#demo.text.highlight) có specificity cao nhất: (1,2,1).
+
+Tính theo hệ 3 cột (ID, Class, Tag):
+- `p` → tag → cột Tag +1 → (0, 0, 1)
+- `#demo` → ID → cột ID +1 → (1, 0, 0)
+- `.text` → class → cột Class +1 → (0, 1, 0)
+- `.highlight` → class → cột Class +1 → (0, 1, 0)
+- Tổng: (1, 2, 1)
+
+Các rule 1–6 không có ID → specificity thấp hơn hẳn.
+Rule 7–8 có ID nhưng ít class hơn.
+Rule 9 có ID + class + tag → (1,1,1).
+Rule 10 có ID + 2 class + tag → (1,2,1) → cao nhất, thắng tất cả.
+Vì vậy, chữ Hello World cuối cùng hiển thị màu gold.
+
+3. Thay đổi thứ tự rules trong CSS — Kết quả có đổi không?
+
+Không đổi.
+Khi specificity khác nhau, thứ tự viết trong file CSS không ảnh hưởng. Rule có specificity cao hơn luôn thắng.
+Thứ tự chỉ quan trọng khi 2 rules có specificity bằng nhau. Lúc đó rule viết sau sẽ override rule viết trước (cascade).
+
+# Phần C: Debug & Suy luận
+
+## Câu C1 — Debug CSS Layout
+
+1. Chiều rộng thực tế (content-box)
+
+.sidebar:
+width: 300px + padding: 20px (trái + phải = 40px) + border: 1px (trái + phải = 2px)
+→ Tổng = 342px
+.content:
+width: 660px + padding: 30px (trái + phải = 60px) + border: 1px (trái + phải = 2px)
+→ Tổng = 722px
+Tổng cộng: 342px + 722px = 1064px > 960px container.
+
+2. Tại sao layout bị vỡ?
+
+Container chỉ rộng 960px nhưng tổng 2 cột là 1064px — vượt quá 104px. Vì đang dùng content-box (mặc định), padding và border được cộng thêm ra ngoài width, làm 2 cột phình to hơn dự tính. Không đủ chỗ → content bị đẩy xuống dòng mới.
+
+3. Hai cách sửa
+
+### Cách 1: Dùng border-box
+
+Thêm `box-sizing: border-box` vào cả sidebar và content. Padding và border sẽ co vào trong, width giữ đúng như đặt → tổng = 300 + 660 = 960px, vừa khít container.
+
+```css
+.sidebar {
+  box-sizing: border-box;
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  float: left;
+}
+
+.content {
+  box-sizing: border-box;
+  width: 660px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  float: left;
+}
+```
+
+### Cách 2: Tự trừ padding + border khỏi width (không dùng border-box)
+
+Tính ngược lại width cần khai báo để chiều rộng thực tế vừa khít 960px.
+
+- Sidebar muốn chiều rộng thực tế = 300px → width khai báo = 300 - 20×2 - 1×2 = 258px
+- Content muốn chiều rộng thực tế = 660px → width khai báo = 660 - 30×2 - 1×2 = 598px
+- Kiểm tra: (258 + 40 + 2) + (598 + 60 + 2) = 300 + 660 = 960px ✓
+
+```css
+.sidebar {
+  width: 258px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  float: left;
+}
+
+.content {
+  width: 598px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  float: left;
+}
+```
+
