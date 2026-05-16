@@ -192,3 +192,41 @@ vì CSS dùng MAargin Collapse khi 2 block nằm dọc nhau margin chạm nhau t
 
 - Element sẽ có màu đen do `!important` có specificity vô cực — phá vỡ toàn bộ quy tắc thông thường
 
+## Bài B1 - Style trang Profile
+
+- 5 loại selector có trong file `style.css`
+
+1. Element selector: `body`, `header`, `table`, `footer`
+2. Class selector: `.active`
+3. ID selector: `#about_me`
+4. Descendant selector: `nav a`, `figure img`, `tbody tr`
+5. Pseudo-class selector:  `nav a:hover`, `tr:nth-child(even)`, `tr:hover`
+
+## Bài B2 
+
+1. Phần 1 — content-box vs border-box
+
+- Hộp 1 (content-box): chiều rộng thực tế = 350px (đo từ DevTools)
+- Hộp 2 (border-box): chiều rộng thực tế = 300px (đo từ DevTools)
+
+Giải thích sự khác biệt:
+
+- Hộp 1 dùng content-box (mặc định): width: 300px chỉ tính phần content. Padding và border được cộng thêm ra ngoài → chiều rộng thực tế = 300 + 20×2 + 5×2 = 350px.
+- Hộp 2 dùng border-box: width: 300px là tổng kích thước bao gồm cả padding và border. Chúng co vào trong → chiều rộng thực tế luôn đúng 300px.
+
+2. Phần 2 — Layout 3 cột
+
+Trường hợp KHÔNG dùng border-box (content-box):
+
+- Cột trái: 250 + 15×2 = 280px
+- Cột giữa: 500 + 20×2 = 540px
+- Cột phải: 250 + 15×2 = 280px
+- Tổng = 280 + 540 + 280 = 1100px → vượt quá container 1000px → layout vỡ
+
+Trường hợp CÓ dùng border-box:
+
+- Cột trái: đúng 250px
+- Cột giữa: đúng 500px
+- Cột phải: đúng 250px
+- Tổng = 250 + 500 + 250 = 1000px → vừa khít container → layout đúng
+
