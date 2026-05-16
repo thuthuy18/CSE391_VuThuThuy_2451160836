@@ -337,3 +337,69 @@ Tính ngược lại width cần khai báo để chiều rộng thực tế vừ
 }
 ```
 
+## Câu C2 — Cascade Puzzle
+
+1. "Sản phẩm A" — h2.title.highlight trong #featured.card
+
+### font-size = 20px
+
+_Các rules liên quan:_
+
+- `body` → font-size: 16px — specificity: (0, 0, 1)
+- `.container` → font-size: 14px — specificity: (0, 1, 0)
+- `.card .title` → font-size: 20px — specificity: (0, 2, 0) ← THẮNG
+
+_.card .title có specificity cao nhất trong các rules về font-size → font-size = 20px_
+
+### color = green
+
+_Các rules liên quan:_
+
+- `.card` → color: blue — specificity: (0, 1, 0)
+- `#featured .title` → color: red — specificity: (1, 1, 0)
+- `.highlight` → color: green !important ← THẮNG
+
+_!important phá vỡ mọi quy tắc specificity, kể cả ID selector → color = green_
+
+2. "Mô tả sản phẩm" — p trong #featured.card
+
+### color = blue
+
+_Các rules liên quan:_
+
+- `body` → color: #333 — specificity: (0, 0, 1)
+- `.card` → color: blue — specificity: (0, 1, 0)
+- `.card p` → color: inherit — specificity: (0, 1, 1) ← THẮNG về specificity
+
+_.card p có specificity cao nhất → áp dụng color: inherit._
+
+3. "Sản phẩm B" — h2.title trong .card thứ 2 (không có id)
+
+### font-size = 20px
+
+_Chỉ có 1 rule liên quan đến font-size:_
+
+- `.card .title` → font-size: 20px — specificity: (0, 2, 0) ← áp dụng
+
+_→ font-size = 20px_
+
+### color = blue
+
+_Các rules liên quan:_
+
+- `.card` → color: blue — specificity: (0, 1, 0) ← THẮNG
+- `#featured .title` → color: red — specificity: (1, 1, 0), nhưng rule này chỉ target #featured, h2 này không có id featured nên không áp dụng
+
+_Chỉ còn .card với color: blue → color = blue_
+
+4. "Mô tả sản phẩm B" — p.highlight trong .card thứ 2
+
+### color = green
+
+_Các rules liên quan:_
+
+- `.card` → color: blue — specificity: (0, 1, 0)
+- `.card p` → color: inherit — specificity: (0, 1, 1)
+- `.highlight` → color: green !important ← THẮNG
+
+_!important thắng tất cả → color = green_
