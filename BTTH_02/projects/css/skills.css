@@ -55,8 +55,8 @@
     margin-bottom: 10px;
 
     font-weight: bold;
-
 }
+
 
 /* =========================
    RESPONSIVE
@@ -66,6 +66,10 @@
 
     .skills-grid {
 
-        grid-template-columns: 1fr;
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 30px;  
     }
 }

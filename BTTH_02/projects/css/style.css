@@ -33,6 +33,8 @@ body {
 
 .hero h1 {
 
+    color: white;
+    
     margin-bottom: 20px;
 
     line-height: 1.3;
@@ -90,7 +92,7 @@ body {
 
         display: none;
     }
-    
+
     /* Hero responsive */
 
     .hero h1 {
