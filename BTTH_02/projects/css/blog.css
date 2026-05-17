@@ -1,6 +1,10 @@
 .sidebar-sticky {
 
+    position: sticky;
+
     top: 100px;
+
+    z-index: 1;
 }
 
 #blog .card {
