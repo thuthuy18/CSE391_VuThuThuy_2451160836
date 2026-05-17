@@ -18,6 +18,8 @@
     font-size: 42px;
 
     margin-bottom: 30px;
+
+    font-weight: 700;
 }
 
 /* =========================
@@ -67,53 +69,54 @@
 }
 
 /* =========================
-   PORTFOLIO GRID
+   CARD
 ========================= */
 
-.portfolio-grid {
+.card {
 
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 25px;
-}
-
-/* ITEM */
-
-.portfolio-item {
-
-    position: relative;
-
-    border-radius: 16px;
+    border-radius: 18px;
 
     overflow: hidden;
 
-    cursor: pointer;
+    transition: 0.3s ease;
+}
 
-  
-    
+.card:hover {
+
+    transform: translateY(-10px);
 }
 
 /* IMAGE */
 
-.portfolio-item img {
+.card-img-top {
 
-    width: 100%;
-
-    aspect-ratio: 4/3;
+    height: 250px;
 
     object-fit: cover;
-
-    display: block;
 
     transition: transform 0.4s ease;
 }
 
-.portfolio-item:hover img {
+.card:hover .card-img-top {
 
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
+
+/* =========================
+   LIGHTBOX LINK
+========================= */
+
+.lightbox-link {
+
+    position: relative;
+
+    display: block;
+
+    text-decoration: none;
+
+    color: white;
+}
+
 /* =========================
    OVERLAY
 ========================= */
@@ -169,30 +172,19 @@
    RESPONSIVE
 ========================= */
 
-/* TABLET */
-
-@media (max-width: 992px) {
-
-    .portfolio-grid {
-
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-/* MOBILE */
-
 @media (max-width: 768px) {
-
-    .portfolio-grid {
-
-        grid-template-columns: 1fr;
-    }
 
     .portfolio-section h2 {
 
         font-size: 32px;
     }
+
+    .card-img-top {
+
+        height: 220px;
+    }
 }
+
 /* =========================
    LIGHTBOX
 ========================= */
