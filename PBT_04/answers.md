@@ -26,6 +26,7 @@
 .item { flex: 1; }
 /* 4 items → Bố cục = ??? */
 
+```
 ┌───────────────────────────────────────────────┐
 │  CONTAINER (100% width)                       │
 │ ┌───────┬───────┬───────┬───────┐             │
@@ -33,14 +34,13 @@
 │ │ 25%   │ 25%   │ 25%   │ 25%   │             │
 │ └───────┴───────┴───────┴───────┘             │
 └───────────────────────────────────────────────┘
+```
 
 Trường hợp 1 – Flex, 4 items, `flex:1`
 
-Các item chia đều chiều ngang container.
-
-Vì `flex:1` → mỗi item chiếm tỷ lệ bằng nhau.
-
-Kết quả: 1 hàng, 4 ô bằng nhau (25% mỗi ô).
+- Các item chia đều chiều ngang container.
+- Vì `flex:1` → mỗi item chiếm tỷ lệ bằng nhau.
+- Kết quả: 1 hàng, 4 ô bằng nhau (25% mỗi ô).
 → Dùng khi muốn phân bố đều các phần tử.
 
 /* Trường hợp 2 */
@@ -48,6 +48,7 @@ Kết quả: 1 hàng, 4 ô bằng nhau (25% mỗi ô).
 .item { width: 45%; margin: 2.5%; }
 /* 6 items → Bố cục = ??? (mấy hàng, mấy cột?) */
 
+```
 ┌───────────────────────────────────────────────┐
 │  CONTAINER                                    │
 │ ┌─────────────┬─────────────┐                 │
@@ -60,38 +61,38 @@ Kết quả: 1 hàng, 4 ô bằng nhau (25% mỗi ô).
 │ │   Item5     │   Item6     │                 │
 │ └─────────────┴─────────────┘                 │
 └───────────────────────────────────────────────┘
+```
 
 Trường hợp 2 – `Flex-wrap`, 6 items, width:45% + margin:2.5%
 
-Mỗi item gần bằng nửa chiều ngang.
-
-`flex-wrap:` wrap cho phép xuống dòng.
-
-6 items → 3 hàng, mỗi hàng 2 item.
+- Mỗi item gần bằng nửa chiều ngang.
+- `flex-wrap:` wrap cho phép xuống dòng.
+- 6 items → 3 hàng, mỗi hàng 2 item.
 → Dùng để tạo layout dạng lưới đơn giản bằng flex.
 
 /* Trường hợp 3 */
 .container { display: flex; justify-content: space-between; align-items: center; }
 /* 3 items → Bố cục = ??? */
 
+```
 ┌───────────────────────────────────────────────┐
 │  CONTAINER                                    │
 │ Item1             Item2             Item3     │
 └───────────────────────────────────────────────┘
+```
 
 Trường hợp 3 – Flex, `justify-content: space-between`
 
-3 item nằm trên cùng một hàng.
-
-Khoảng trống được phân bố đều giữa các item.
-
-`align-items:` center → căn giữa theo trục dọc.
+- 3 item nằm trên cùng một hàng.
+- Khoảng trống được phân bố đều giữa các item.
+- `align-items:` center → căn giữa theo trục dọc.
 → Dùng cho thanh menu hoặc dàn đều nút bấm.
 
 /* Trường hợp 4 */
 .container { display: grid; grid-template-columns: 200px 1fr 200px; gap: 20px; }
 /* 3 items → Bố cục = ??? */
 
+```
 ┌───────────────────────────────────────────────┐
 │  CONTAINER                                    │
 │ ┌───────┬───────────────┬───────┐             │
@@ -99,18 +100,19 @@ Khoảng trống được phân bố đều giữa các item.
 │ │200px  │     flexible  │200px  │             │
 │ └───────┴───────────────┴───────┘             │
 └───────────────────────────────────────────────┘
+```
 
 Trường hợp 4 – Grid, `200px 1fr 200px`
 
-Grid có 3 cột: trái 200px, giữa co giãn, phải 200px.
-
-3 item lấp đầy 3 cột.
+- Grid có 3 cột: trái 200px, giữa co giãn, phải 200px.
+- 3 item lấp đầy 3 cột.
 → Dùng cho layout kiểu sidebar–content–sidebar.
 
 /* Trường hợp 5 */
 .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 /* 7 items → Bố cục = ??? (mấy hàng? item cuối ở đâu?) */
 
+```
 ┌───────────────────────────────────────────────┐
 │  CONTAINER                                    │
 │ ┌───────┬───────┬───────┐                     │
@@ -123,18 +125,15 @@ Grid có 3 cột: trái 200px, giữa co giãn, phải 200px.
 │ │ Item7 │                                     │
 │ └───────┘                                     │
 └───────────────────────────────────────────────┘
+```
 
 Trường hợp 5 – Grid, `repeat(3,1fr)` với 7 items
 
-Grid có 3 cột bằng nhau.
-
-7 items → 3 hàng:
-
-Hàng 1: 3 item
-
-Hàng 2: 3 item
-
-Hàng 3: còn lại 1 item ở cột đầu tiên
+- Grid có 3 cột bằng nhau.
+- 7 items → 3 hàng:
+- Hàng 1: 3 item
+- Hàng 2: 3 item
+- Hàng 3: còn lại 1 item ở cột đầu tiên
 → Dùng cho bố cục dạng lưới đều, item cuối lẻ nằm một mình.
 
 
