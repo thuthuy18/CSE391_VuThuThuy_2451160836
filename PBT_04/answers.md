@@ -20,11 +20,12 @@
 - Là phần tử tổ tiên gần nhất có thuộc tính position được thiết lập (không phải static). Phần tử absolute sẽ căn chỉnh tọa độ dựa trên hộp chứa (containing block) của ancestor này. Nếu không có, nó mặc định căn theo viewport.
 
 ### Câu A2 (10đ) — Flexbox vs Grid
-
+```
 /* Trường hợp 1 */
 .container { display: flex; }
 .item { flex: 1; }
 /* 4 items → Bố cục = ??? */
+```
 
 ```
 ┌───────────────────────────────────────────────┐
@@ -43,10 +44,12 @@ Trường hợp 1 – Flex, 4 items, `flex:1`
 - Kết quả: 1 hàng, 4 ô bằng nhau (25% mỗi ô).
 → Dùng khi muốn phân bố đều các phần tử.
 
+```
 /* Trường hợp 2 */
 .container { display: flex; flex-wrap: wrap; }
 .item { width: 45%; margin: 2.5%; }
 /* 6 items → Bố cục = ??? (mấy hàng, mấy cột?) */
+```
 
 ```
 ┌───────────────────────────────────────────────┐
@@ -70,9 +73,11 @@ Trường hợp 2 – `Flex-wrap`, 6 items, width:45% + margin:2.5%
 - 6 items → 3 hàng, mỗi hàng 2 item.
 → Dùng để tạo layout dạng lưới đơn giản bằng flex.
 
+```
 /* Trường hợp 3 */
 .container { display: flex; justify-content: space-between; align-items: center; }
 /* 3 items → Bố cục = ??? */
+```
 
 ```
 ┌───────────────────────────────────────────────┐
@@ -88,9 +93,11 @@ Trường hợp 3 – Flex, `justify-content: space-between`
 - `align-items:` center → căn giữa theo trục dọc.
 → Dùng cho thanh menu hoặc dàn đều nút bấm.
 
+```
 /* Trường hợp 4 */
 .container { display: grid; grid-template-columns: 200px 1fr 200px; gap: 20px; }
 /* 3 items → Bố cục = ??? */
+```
 
 ```
 ┌───────────────────────────────────────────────┐
@@ -108,9 +115,11 @@ Trường hợp 4 – Grid, `200px 1fr 200px`
 - 3 item lấp đầy 3 cột.
 → Dùng cho layout kiểu sidebar–content–sidebar.
 
+```
 /* Trường hợp 5 */
 .container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 /* 7 items → Bố cục = ??? (mấy hàng? item cuối ở đâu?) */
+```
 
 ```
 ┌───────────────────────────────────────────────┐
