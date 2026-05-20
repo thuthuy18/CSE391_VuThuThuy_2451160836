@@ -37,8 +37,7 @@
 └───────────────────────────────────────────────┘
 ```
 
-Trường hợp 1 – Flex, 4 items, `flex:1`
-
+=> Giải thích : Flex, 4 items, `flex:1`
 - Các item chia đều chiều ngang container.
 - Vì `flex:1` → mỗi item chiếm tỷ lệ bằng nhau.
 - Kết quả: 1 hàng, 4 ô bằng nhau (25% mỗi ô).
@@ -65,9 +64,7 @@ Trường hợp 1 – Flex, 4 items, `flex:1`
 │ └─────────────┴─────────────┘                 │
 └───────────────────────────────────────────────┘
 ```
-
-Trường hợp 2 – `Flex-wrap`, 6 items, width:45% + margin:2.5%
-
+=> Giải thích : `Flex-wrap`, 6 items, width:45% + margin:2.5%
 - Mỗi item gần bằng nửa chiều ngang.
 - `flex-wrap:` wrap cho phép xuống dòng.
 - 6 items → 3 hàng, mỗi hàng 2 item.
@@ -86,8 +83,7 @@ Trường hợp 2 – `Flex-wrap`, 6 items, width:45% + margin:2.5%
 └───────────────────────────────────────────────┘
 ```
 
-Trường hợp 3 – Flex, `justify-content: space-between`
-
+=> Giải thích : Flex, `justify-content: space-between`
 - 3 item nằm trên cùng một hàng.
 - Khoảng trống được phân bố đều giữa các item.
 - `align-items:` center → căn giữa theo trục dọc.
@@ -109,8 +105,7 @@ Trường hợp 3 – Flex, `justify-content: space-between`
 └───────────────────────────────────────────────┘
 ```
 
-Trường hợp 4 – Grid, `200px 1fr 200px`
-
+=> Giải thích : Grid, `200px 1fr 200px`
 - Grid có 3 cột: trái 200px, giữa co giãn, phải 200px.
 - 3 item lấp đầy 3 cột.
 → Dùng cho layout kiểu sidebar–content–sidebar.
@@ -136,8 +131,7 @@ Trường hợp 4 – Grid, `200px 1fr 200px`
 └───────────────────────────────────────────────┘
 ```
 
-Trường hợp 5 – Grid, `repeat(3,1fr)` với 7 items
-
+=> Giải thích : Grid, `repeat(3,1fr)` với 7 items
 - Grid có 3 cột bằng nhau.
 - 7 items → 3 hàng:
 - Hàng 1: 3 item
