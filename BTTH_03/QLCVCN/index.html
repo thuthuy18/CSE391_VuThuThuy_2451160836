@@ -106,6 +106,10 @@
                         id="taskTitle"
                         placeholder="Nhập tiêu đề công việc"
                         required
+
+                        oninvalid="this.setCustomValidity('Vui lòng nhập tiêu đề công việc')"
+
+                        oninput="this.setCustomValidity('')"
                     >
 
                 </div>
@@ -120,6 +124,13 @@
                     <textarea 
                         id="taskDescription"
                         placeholder="Nhập mô tả công việc"
+
+                        required
+
+                        oninvalid="this.setCustomValidity('Vui lòng nhập mô tả công việc')"
+
+                        oninput="this.setCustomValidity('')"
+
                     ></textarea>
 
                 </div>
@@ -132,9 +143,15 @@
                     </label>
 
                     <input 
-                        type="date"
-                        id="taskDeadline"
-                    >
+                    type="date"
+                    id="taskDeadline"
+
+                    required
+
+                    oninvalid="this.setCustomValidity('Vui lòng chọn hạn hoàn thành')"
+
+                    oninput="this.setCustomValidity('')"
+                >
 
                 </div>
 
@@ -189,6 +206,8 @@
         </div>
 
     </div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
