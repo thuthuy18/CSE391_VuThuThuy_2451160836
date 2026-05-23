@@ -1,11 +1,17 @@
 const openModalBtn = document.getElementById("openModalBtn");
+
 const closeModalBtn = document.getElementById("btnClose");
+
 const modal = document.getElementById("studentFormModal");
+
 const studentForm = document.getElementById("studentForm");
+
 const studentList = document.getElementById("studentList");
+
 const message = document.getElementById("message");
-const totalStudents = document.getElementById("totalStudents");
-const averageScore = document.getElementById("averageScore");
+
+const formTitle = document.getElementById("formTitle");
+
 /* =========================
    MẢNG DỮ LIỆU
 ========================= */
@@ -15,24 +21,37 @@ let students = [];
 /* =========================
    MỞ MODAL
 ========================= */
+
 openModalBtn.addEventListener("click", function(){
-    modal.classList.remove("hidden"); // hiển thị modal
+
+    modal.classList.remove("hidden");
+
+    formTitle.textContent = "Thêm sinh viên";
+
+    studentForm.reset();
+
+    delete studentForm.dataset.editIndex;
+
 });
 
 /* =========================
    ĐÓNG MODAL
 ========================= */
+
 closeModalBtn.addEventListener("click", function(){
-    modal.classList.add("hidden"); // ẩn modal
+
+    modal.classList.add("hidden");
+
 });
+
+/* =========================
+   SUBMIT FORM
+========================= */
 
 studentForm.addEventListener("submit", function(event){
 
     event.preventDefault();
 
-    /* =========================
-       LẤY DỮ LIỆU INPUT
-    ========================= */
     const id = document.getElementById("studentId").value;
 
     const name = document.getElementById("studentName").value;
@@ -44,10 +63,6 @@ studentForm.addEventListener("submit", function(event){
     const score = document.getElementById("studentScore").value;
 
     const email = document.getElementById("studentEmail").value;
-
-    /* =========================
-       TẠO OBJECT SINH VIÊN
-    ========================= */
 
     const student = {
 
@@ -64,54 +79,32 @@ studentForm.addEventListener("submit", function(event){
         email: email
 
     };
-    students.push(student);
-    renderStudents();
-    console.log(students);
-    console.log(id);
-    console.log(name);
-    console.log("Đã submit form");
 
-});
+    /* =========================
+       KIỂM TRA ĐANG SỬA
+    ========================= */
 
-function renderStudents(){
+    if(studentForm.dataset.editIndex !== undefined){
 
-    studentList.innerHTML = "";
+        const index = studentForm.dataset.editIndex;
 
-    students.forEach(function(student){
+        students[index] = student;
 
-        const row = `
-        
-            <tr>
+        delete studentForm.dataset.editIndex;
 
-                <td>${student.id}</td>
+        message.textContent =
+            "Cập nhật sinh viên thành công!";
 
-                <td>${student.name}</td>
+    }
 
-                <td>${student.dob}</td>
+    else{
 
-                <td>${student.studentClass}</td>
+        students.push(student);
 
-                <td>${student.score}</td>
+        message.textContent =
+            "Thêm sinh viên thành công!";
 
-                <td>${student.email}</td>
-
-                <td>
-
-                    <button>Sửa</button>
-
-                    <button>Xóa</button>
-
-                </td>
-
-            </tr>
-
-        `;
-
-        studentList.innerHTML += row;
-
-    });
-
-    students.push(student);
+    }
 
     renderStudents();
 
@@ -119,6 +112,122 @@ function renderStudents(){
 
     studentForm.reset();
 
+});
+
+/* =========================
+   HIỂN THỊ DỮ LIỆU
+========================= */
+
+function renderStudents(){
+
+    studentList.innerHTML = "";
+
+    students.forEach((student, index) => {
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+
+            <td>${student.id}</td>
+
+            <td>${student.name}</td>
+
+            <td>${student.dob}</td>
+
+            <td>${student.studentClass}</td>
+
+            <td>${student.score}</td>
+
+            <td>${student.email}</td>
+
+            <td>
+
+                <button 
+                    class="editBtn"
+                    data-index="${index}"
+                >
+                    Sửa
+                </button>
+
+                <button 
+                    class="deleteBtn"
+                    data-index="${index}"
+                >
+                    Xóa
+                </button>
+
+            </td>
+
+        `;
+
+        studentList.appendChild(tr);
+
+    });
+
 }
 
+/* =========================
+   XỬ LÝ SỬA / XÓA
+========================= */
 
+studentList.addEventListener("click", function(e){
+
+    /* =========================
+       XÓA
+    ========================= */
+
+    if(e.target.classList.contains("deleteBtn")){
+
+        const index = e.target.dataset.index;
+
+        if(confirm("Bạn có chắc muốn xóa không?")){
+
+            students.splice(index, 1);
+
+            renderStudents();
+
+            message.textContent =
+                "Xóa sinh viên thành công!";
+
+        }
+
+    }
+
+    /* =========================
+       SỬA
+    ========================= */
+
+    if(e.target.classList.contains("editBtn")){
+
+        const index = e.target.dataset.index;
+
+        const student = students[index];
+
+        document.getElementById("studentId").value =
+            student.id;
+
+        document.getElementById("studentName").value =
+            student.name;
+
+        document.getElementById("studentDob").value =
+            student.dob;
+
+        document.getElementById("studentClass").value =
+            student.studentClass;
+
+        document.getElementById("studentScore").value =
+            student.score;
+
+        document.getElementById("studentEmail").value =
+            student.email;
+
+        studentForm.dataset.editIndex = index;
+
+        formTitle.textContent =
+            "Cập nhật sinh viên";
+
+        modal.classList.remove("hidden");
+
+    }
+
+});
