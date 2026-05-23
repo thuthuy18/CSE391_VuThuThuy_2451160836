@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý công việc cá nhân</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- APP -->
+    <div class="app">
+
+        <!-- HEADER -->
+        <header class="app-header">
+
+            <h1>Quản lý công việc cá nhân</h1>
+
+        </header>
+
+        <!-- ACTION BUTTON -->
+        <section class="top-actions">
+
+            <button id="openTaskModal">
+                + Thêm công việc
+            </button>
+
+        </section>
+
+        <!-- SUMMARY -->
+        <section class="task-summary">
+
+            <div class="summary-card">
+
+                <h3>Tổng công việc</h3>
+
+                <p id="totalTasks">0</p>
+
+            </div>
+
+            <div class="summary-card">
+
+                <h3>Đã hoàn thành</h3>
+
+                <p id="completedTasks">0</p>
+
+            </div>
+
+            <div class="summary-card">
+
+                <h3>Chưa hoàn thành</h3>
+
+                <p id="pendingTasks">0</p>
+
+            </div>
+
+        </section>
+
+        <!-- MESSAGE -->
+        <div id="messageBox"></div>
+
+        <!-- TASK LIST -->
+        <section class="task-list" id="taskList">
+
+            <p class="empty-message">
+                Chưa có công việc nào.
+            </p>
+
+        </section>
+
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" id="taskModal">
+
+        <div class="modal-content">
+
+            <!-- MODAL HEADER -->
+            <div class="modal-header">
+
+                <h2 id="modalTitle">
+                    Thêm công việc
+                </h2>
+
+                <button id="closeModal">
+                    X
+                </button>
+
+            </div>
+
+            <!-- FORM -->
+            <form id="taskForm">
+
+                <!-- TITLE -->
+                <div class="form-group">
+
+                    <label for="taskTitle">
+                        Tiêu đề công việc
+                    </label>
+
+                    <input 
+                        type="text"
+                        id="taskTitle"
+                        placeholder="Nhập tiêu đề công việc"
+                        required
+                    >
+
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="form-group">
+
+                    <label for="taskDescription">
+                        Mô tả ngắn
+                    </label>
+
+                    <textarea 
+                        id="taskDescription"
+                        placeholder="Nhập mô tả công việc"
+                    ></textarea>
+
+                </div>
+
+                <!-- DEADLINE -->
+                <div class="form-group">
+
+                    <label for="taskDeadline">
+                        Hạn hoàn thành
+                    </label>
+
+                    <input 
+                        type="date"
+                        id="taskDeadline"
+                    >
+
+                </div>
+
+                <!-- PRIORITY -->
+                <div class="form-group">
+
+                    <label for="taskPriority">
+                        Mức ưu tiên
+                    </label>
+
+                    <select id="taskPriority">
+
+                        <option value="low">
+                            Thấp
+                        </option>
+
+                        <option value="medium">
+                            Trung bình
+                        </option>
+
+                        <option value="high">
+                            Cao
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- STATUS -->
+                <div class="form-group checkbox-group">
+
+                    <input 
+                        type="checkbox"
+                        id="taskCompleted"
+                    >
+
+                    <label for="taskCompleted">
+                        Đã hoàn thành
+                    </label>
+
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <button type="submit" id="saveTaskBtn">
+
+                    Lưu công việc
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
