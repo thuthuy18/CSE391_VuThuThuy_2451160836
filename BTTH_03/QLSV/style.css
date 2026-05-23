@@ -264,6 +264,56 @@ input:focus{
 }
 
 /* =========================
+   ACTION BUTTONS
+========================= */
+
+.editBtn{
+
+    background: #bd7ab0;
+
+    color:white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    margin-right: 5px;
+
+    font-weight: bold;
+}
+
+.editBtn:hover{
+
+    background: #bd7ab0;
+}
+
+.deleteBtn{
+
+    background: #1ac388;
+
+    color: white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.deleteBtn:hover{
+
+    background: #1ac388;
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 

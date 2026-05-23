@@ -19,6 +19,21 @@ const formTitle = document.getElementById("formTitle");
 let students = [];
 
 /* =========================
+   LOAD LOCALSTORAGE
+========================= */
+
+const savedStudents =
+    localStorage.getItem("students");
+
+if(savedStudents){
+
+    students = JSON.parse(savedStudents);
+
+    renderStudents();
+
+}
+
+/* =========================
    MỞ MODAL
 ========================= */
 
@@ -101,10 +116,20 @@ studentForm.addEventListener("submit", function(event){
 
         students.push(student);
 
-        message.textContent =
-            "Thêm sinh viên thành công!";
+        showMessage(
+            "Thêm sinh viên thành công!"
+        );
 
     }
+
+    /* =========================
+       LƯU LOCALSTORAGE
+    ========================= */
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
 
     renderStudents();
 
@@ -164,6 +189,8 @@ function renderStudents(){
 
     });
 
+    updateStatistics();
+
 }
 
 /* =========================
@@ -184,10 +211,16 @@ studentList.addEventListener("click", function(e){
 
             students.splice(index, 1);
 
+            localStorage.setItem(
+            "students",
+            JSON.stringify(students)
+        );
+
             renderStudents();
 
-            message.textContent =
-                "Xóa sinh viên thành công!";
+            showMessage(
+                "Xóa sinh viên thành công!"
+            );
 
         }
 
@@ -231,3 +264,55 @@ studentList.addEventListener("click", function(e){
     }
 
 });
+
+/* =========================
+   HIỂN THỊ THÔNG BÁO
+========================= */
+
+function showMessage(text){
+
+    message.textContent = text;
+
+    setTimeout(function(){
+
+        message.textContent = "";
+
+    }, 3000);
+
+}
+
+/* =========================
+   THỐNG KÊ
+========================= */
+
+function updateStatistics(){
+
+    totalStudents.textContent =
+        students.length;
+
+    if(students.length === 0){
+
+        averageScore.textContent = 0;
+
+        return;
+
+    }
+
+    const totalScore =
+        students.reduce(
+
+            (sum, student) =>
+
+                sum + parseFloat(student.score),
+
+            0
+
+        );
+
+    averageScore.textContent = (
+
+        totalScore / students.length
+
+    ).toFixed(2);
+
+}
