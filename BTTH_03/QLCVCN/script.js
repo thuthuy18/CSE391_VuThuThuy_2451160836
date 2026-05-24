@@ -22,6 +22,18 @@ const taskForm = document.getElementById("taskForm");
 const taskList = document.getElementById("taskList");
 
 // =========================
+// SUMMARY
+// =========================
+
+const modalTitle = document.getElementById("modalTitle");
+
+const totalTasks = document.getElementById("totalTasks");
+
+const completedTasks = document.getElementById("completedTasks");
+
+const pendingTasks = document.getElementById("pendingTasks");
+
+// =========================
 // FORM INPUTS
 // =========================
 
@@ -57,6 +69,56 @@ appTitle.textContent = "Ứng dụng quản lý công việc";
 openModalBtn.textContent = "+ Tạo công việc mới";
 
 messageBox.textContent = "Chào mừng bạn đến với ứng dụng!";
+
+// =========================
+// SAVE LOCAL STORAGE
+// =========================
+
+function saveTasks(){
+
+    localStorage.setItem(
+        "tasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+// =========================
+// LOAD LOCAL STORAGE
+// =========================
+
+function loadTasks(){
+
+    const savedTasks = localStorage.getItem("tasks");
+
+    if(savedTasks){
+
+        tasks = JSON.parse(savedTasks);
+
+    }
+
+}
+
+// =========================
+// UPDATE SUMMARY
+// =========================
+
+function updateTaskSummary(){
+
+    totalTasks.textContent = tasks.length;
+
+    const completed = tasks.filter(function(task){
+
+        return task.completed;
+
+    });
+
+    completedTasks.textContent = completed.length;
+
+    pendingTasks.textContent =
+        tasks.length - completed.length;
+
+}
 
 
 // =========================
@@ -175,6 +237,12 @@ function renderTasks(){
 
         `;
 
+        // UPDATE SUMMARY
+        updateTaskSummary();
+
+        // SAVE STORAGE
+        saveTasks();
+
         return;
 
     }
@@ -198,7 +266,13 @@ function renderTasks(){
                 </p>
 
                 <p>
-                    ⭐ Ưu tiên: ${task.priority}
+                    ⭐ Ưu tiên: ${
+                    task.priority === "high"
+                    ? "Cao"
+                    : task.priority === "medium"
+                    ? "Trung bình"
+                    : "Thấp"
+                }
                 </p>
 
                 <p>
@@ -241,6 +315,18 @@ function renderTasks(){
         taskList.innerHTML += taskCard;
 
     });
+
+    // =========================
+    // UPDATE SUMMARY
+    // =========================
+
+    updateTaskSummary();
+
+    // =========================
+    // SAVE STORAGE
+    // =========================
+
+    saveTasks();
 
 }
 
@@ -331,6 +417,8 @@ function toggleTask(id){
     });
 
     renderTasks();
+    
+    showMessage("Cập nhật trạng thái thành công!");
 
 }
 
@@ -351,3 +439,11 @@ function showMessage(message){
     }, 3000);
 
 }
+
+// =========================
+// START APP
+// =========================
+
+loadTasks();
+
+renderTasks();
