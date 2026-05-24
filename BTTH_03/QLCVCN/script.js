@@ -16,6 +16,39 @@ const messageBox = document.getElementById("messageBox");
 const taskForm = document.getElementById("taskForm");
 
 // =========================
+// TASK LIST
+// =========================
+
+const taskList = document.getElementById("taskList");
+
+// =========================
+// FORM INPUTS
+// =========================
+
+const taskTitle = document.getElementById("taskTitle");
+
+const taskDescription = document.getElementById("taskDescription");
+
+const taskDeadline = document.getElementById("taskDeadline");
+
+const taskPriority = document.getElementById("taskPriority");
+
+const taskCompleted = document.getElementById("taskCompleted");
+
+// =========================
+// TASK DATA
+// =========================
+
+let tasks = [];
+
+// =========================
+// EDIT MODE
+// =========================
+
+let editTaskId = null;
+
+
+// =========================
 // THAY ĐỔI DOM
 // =========================
 
@@ -32,6 +65,12 @@ messageBox.textContent = "Chào mừng bạn đến với ứng dụng!";
 
 openModalBtn.addEventListener("click", function(){
 
+    taskForm.reset();
+
+    editTaskId = null;
+
+    modalTitle.textContent = "Thêm công việc";
+
     taskModal.style.display = "flex";
 
 });
@@ -46,14 +85,18 @@ closeModalBtn.addEventListener("click", function(){
 
 });
 
+// =========================
+// SUBMIT FORM
+// =========================
 
 taskForm.addEventListener("submit", function(event){
 
     event.preventDefault();
 
-    const newTask = {
+    // Create task object
+    const taskData = {
 
-        id: Date.now(),
+        id: editTaskId || Date.now(),
 
         title: taskTitle.value,
 
@@ -67,16 +110,244 @@ taskForm.addEventListener("submit", function(event){
 
     };
 
-    tasks.push(newTask);
+    // =========================
+    // UPDATE TASK
+    // =========================
+
+    if(editTaskId){
+
+        tasks = tasks.map(function(task){
+
+            if(task.id === editTaskId){
+
+                return taskData;
+
+            }
+
+            return task;
+
+        });
+
+        showMessage("Cập nhật công việc thành công!");
+
+    }
+
+    // =========================
+    // ADD TASK
+    // =========================
+
+    else{
+
+        tasks.push(taskData);
+
+        showMessage("Thêm công việc thành công!");
+
+    }
+
+    // Render task
+    renderTasks();
+
+    // Reset form
+    taskForm.reset();
+
+    // Close modal
+    taskModal.style.display = "none";
+
+    // Reset edit mode
+    editTaskId = null;
+
+});
+
+// =========================
+// RENDER TASKS
+// =========================
+
+function renderTasks(){
+
+    // Empty task
+    if(tasks.length === 0){
+
+        taskList.innerHTML = `
+        
+            <p class="empty-message">
+                Chưa có công việc nào.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+    // Reset html
+    taskList.innerHTML = "";
+
+    // Loop tasks
+    tasks.forEach(function(task){
+
+        const taskCard = `
+
+            <div class="task-card ${task.completed ? 'completed' : ''}">
+
+                <h3>${task.title}</h3>
+
+                <p>${task.description}</p>
+
+                <p>
+                    📅 Hạn: ${task.deadline}
+                </p>
+
+                <p>
+                    ⭐ Ưu tiên: ${task.priority}
+                </p>
+
+                <p>
+                    ${
+                        task.completed
+                        ? "✅ Đã hoàn thành"
+                        : "❌ Chưa hoàn thành"
+                    }
+                </p>
+
+                <div class="task-actions">
+
+                    <button 
+                        class="complete-btn"
+                        onclick="toggleTask(${task.id})"
+                    >
+                        Hoàn thành
+                    </button>
+
+                    <button 
+                        class="edit-btn"
+                        onclick="editTask(${task.id})"
+                    >
+                        Sửa
+                    </button>
+
+                    <button 
+                        class="delete-btn"
+                        onclick="deleteTask(${task.id})"
+                    >
+                        Xóa
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        taskList.innerHTML += taskCard;
+
+    });
+
+}
+
+// =========================
+// DELETE TASK
+// =========================
+
+function deleteTask(id){
+
+    const isConfirm = confirm(
+        "Bạn có chắc muốn xóa công việc này không?"
+    );
+
+    if(!isConfirm){
+
+        return;
+
+    }
+
+    tasks = tasks.filter(function(task){
+
+        return task.id !== id;
+
+    });
 
     renderTasks();
 
+    showMessage("Xóa công việc thành công!");
+
+}
+
+// =========================
+// EDIT TASK
+// =========================
+
+function editTask(id){
+
+    const task = tasks.find(function(task){
+
+        return task.id === id;
+
+    });
+
+    // Put old data into form
+    taskTitle.value = task.title;
+
+    taskDescription.value = task.description;
+
+    taskDeadline.value = task.deadline;
+
+    taskPriority.value = task.priority;
+
+    taskCompleted.checked = task.completed;
+
+    // Save edit id
+    editTaskId = id;
+
+    // Change title
+    modalTitle.textContent = "Cập nhật công việc";
+
+    // Show modal
+    taskModal.style.display = "flex";
+
+}
+
+// =========================
+// TOGGLE COMPLETE
+// =========================
+
+function toggleTask(id){
+
+    tasks = tasks.map(function(task){
+
+        if(task.id === id){
+
+            return {
+
+                ...task,
+
+                completed: !task.completed
+
+            };
+
+        }
+
+        return task;
+
+    });
+
+    renderTasks();
+
+}
+
+// =========================
+// SHOW MESSAGE
+// =========================
+
+function showMessage(message){
+
     messageBox.style.display = "block";
 
-    messageBox.textContent = "Thêm công việc thành công!";
+    messageBox.textContent = message;
 
-    taskForm.reset();
+    setTimeout(function(){
 
-    taskModal.style.display = "none";
+        messageBox.style.display = "none";
 
-});
+    }, 3000);
+
+}
