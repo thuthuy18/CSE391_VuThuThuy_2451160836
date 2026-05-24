@@ -7,6 +7,6 @@ Lớp: 66HTTT2
 
 Tiến độ: 
 
-Hoàn thành PBT_01 và PBT_02 , BTTH_01, BTTH_02
+Hoàn thành PBT_01 và PBT_02 , BTTH_01, BTTH_02 ,BTTH_03
 
 Đang làm PBT_03 &PBT_04 & PBT_05
