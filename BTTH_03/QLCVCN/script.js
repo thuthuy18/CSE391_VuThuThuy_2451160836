@@ -45,3 +45,38 @@ closeModalBtn.addEventListener("click", function(){
     taskModal.style.display = "none";
 
 });
+
+
+taskForm.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+    const newTask = {
+
+        id: Date.now(),
+
+        title: taskTitle.value,
+
+        description: taskDescription.value,
+
+        deadline: taskDeadline.value,
+
+        priority: taskPriority.value,
+
+        completed: taskCompleted.checked
+
+    };
+
+    tasks.push(newTask);
+
+    renderTasks();
+
+    messageBox.style.display = "block";
+
+    messageBox.textContent = "Thêm công việc thành công!";
+
+    taskForm.reset();
+
+    taskModal.style.display = "none";
+
+});
