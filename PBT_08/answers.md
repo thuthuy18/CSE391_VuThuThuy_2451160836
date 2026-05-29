@@ -254,6 +254,8 @@ const daoNguoc = [...nums].reverse();
 ```
 ## Câu A4  — Object Destructuring & Spread
 
+Kết quả dự doán output là: 
+
 ```JavaScript
 iPhone 16 25990000 8 Titan
 ReferenceError
@@ -274,21 +276,21 @@ const { name, price, specs: { ram, color } } = product;
 
 Dòng này lấy dữ liệu từ object:
 
-`name` → `"iPhone 16"`
-`price` → 25990000
-`ram` → `8`
-`color` → `"Titan"`
+- `name` → `"iPhone 16"`
+- `price` → 25990000
+- `ram` → `8`
+- `color` → `"Titan"`
 
 nên:
 
 ```JavaScript
-console.log(name, price, ram, color); #in ra: iPhone 16 25990000 8 Titan#
+console.log(name, price, ram, color); //in ra: iPhone 16 25990000 8 Titan
 ```
 
 
 2. Vì sao `console.log(specs)` lỗi?
 
-Trong destructuring:
+- Trong destructuring:
 
 ```Javascript 
 
@@ -296,14 +298,9 @@ specs: { ram, color }
 
 ```
 
-ta chỉ lấy:
+ta chỉ lấy: `ram`, `color` ra từ `object specs`.
 
-`ram`
-`color`
-
-ra từ `object specs`.
-
-Biến `specs` KHÔNG được tạo riêng nên:
+- Biến `specs` KHÔNG được tạo riêng nên:
 
 ```JavaScript
 console.log(specs); #sẽ báo: ReferenceError#
@@ -316,40 +313,36 @@ console.log(specs); #sẽ báo: ReferenceError#
 const updated = { ...product, price: 23990000, sale: true };
 ```
 
-Spread sẽ:
-
-copy toàn bộ object `product`
-sau đó ghi đè: `price`
-thêm:`sale`
+- Spread sẽ: copy toàn bộ object `product`sau đó ghi đè `price` cuối cùng thêm `sale`
 
 nên:
 ```JavaScript
-updated.price #→ 23990000#
+updated.price //→ 23990000 
 
-updated.sale #→ true#
+updated.sale // → true
 ```
 
 
 4. Object gốc có đổi không?
 
 ```JavaScript
-console.log(product.price); #→ vẫn là:25990000#
+console.log(product.price); //→ vẫn là:25990000
 
 ```
-Vì spread tạo object mới nên object gốc không bị đổi.
+- Vì spread tạo object mới nên object gốc không bị đổi.
 
 5. Spread Gotcha (Shallow Copy)
 
 ```JavaScript
 const copy = { ...product };
 ```
-Spread chỉ copy tầng đầu tiên (shallow copy).
+- Spread chỉ copy tầng đầu tiên (shallow copy).
 
-Object bên trong:
+- Object bên trong:
 
 `specs`: vẫn dùng chung reference.
 
-Khi:
+- Khi:
 
 ```JavaScript
 copy.specs.ram = 16;
@@ -361,5 +354,5 @@ thì product.specs.ram cũng đổi theo.
 nên:
 
 ```JavaScript
-console.log(product.specs.ram);#in ra:16#
+console.log(product.specs.ram); //in ra:16
 ```
