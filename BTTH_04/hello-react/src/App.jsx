@@ -1,17 +1,46 @@
-function StudentCard() {
+import { useState } from "react";
+
+function FlowDemo() {
+
+    console.log("🔄 Component render!");
+
+    const [step, setStep] = useState(1);
+
     return (
-        <div className="card">
-            <img src="avatar.png" alt="Avatar" />
+        <div style={{ padding: "20px" }}>
 
-            <h2>Vũ Thu Thủy</h2>
+            <h2>Luồng hoạt động</h2>
 
-            <p>Sinh viên năm 2</p>
+            <p>Bước hiện tại: {step}</p>
 
-            <label htmlFor="email">Email:</label>
+            <button onClick={() => setStep(step + 1)}>
+                Bước tiếp theo →
+            </button>
 
-            <input type="email" id="email" />
+            <button onClick={() => setStep(1)}>
+                Quay lại đầu
+            </button>
+
+            <div
+                style={{
+                    marginTop: "20px",
+                    padding: "10px",
+                    background: "#f0f0f0"
+                }}
+            >
+
+                {step === 1 && <p>👋 Bước 1: Xin chào!</p>}
+
+                {step === 2 && <p>📖 Bước 2: Đang học React</p>}
+
+                {step === 3 && <p>🎯 Bước 3: Hiểu useState</p>}
+
+                {step === 4 && <p>🎉 Bước 4: Hoàn thành!</p>}
+
+            </div>
+
         </div>
     );
 }
 
-export default StudentCard;
+export default FlowDemo;
