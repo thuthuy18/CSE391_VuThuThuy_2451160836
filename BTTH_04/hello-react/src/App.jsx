@@ -1,46 +1,109 @@
-import { useState } from "react";
+function ProductListDemo() {
 
-function FlowDemo() {
+    // =========================
+    // Danh sách sản phẩm
+    // =========================
 
-    console.log("🔄 Component render!");
+    const products = [
 
-    const [step, setStep] = useState(1);
+        {
+            id: 1,
+            name: "iPhone 15",
+            price: 25000000
+        },
+
+        {
+            id: 2,
+            name: "AirPods Pro",
+            price: 5000000
+        },
+
+        {
+            id: 3,
+            name: "Chuột Gaming",
+            price: 500000
+        },
+
+        {
+            id: 4,
+            name: "Laptop Dell",
+            price: 30000000
+        },
+
+        {
+            id: 5,
+            name: "Bàn phím cơ",
+            price: 1500000
+        }
+
+    ];
+
+
+    // =========================
+    // Tính tổng giá
+    // =========================
+
+    const total = products.reduce(
+
+        (sum, product) => sum + product.price,
+
+        0
+
+    );
+
 
     return (
         <div style={{ padding: "20px" }}>
 
-            <h2>Luồng hoạt động</h2>
+            <h1>📝 Product List Rendering</h1>
 
-            <p>Bước hiện tại: {step}</p>
 
-            <button onClick={() => setStep(step + 1)}>
-                Bước tiếp theo →
-            </button>
+            {/* Danh sách sản phẩm */}
+            <h2>1️⃣ Danh sách sản phẩm</h2>
 
-            <button onClick={() => setStep(1)}>
-                Quay lại đầu
-            </button>
+            {products.map(product => (
 
-            <div
-                style={{
-                    marginTop: "20px",
-                    padding: "10px",
-                    background: "#f0f0f0"
-                }}
-            >
+                <div
+                    key={product.id}
+                    style={{
+                        border: "1px solid #ddd",
+                        padding: "10px",
+                        marginBottom: "10px"
+                    }}
+                >
 
-                {step === 1 && <p>👋 Bước 1: Xin chào!</p>}
+                    <p>
+                        Tên sản phẩm:
+                        {product.name}
+                    </p>
 
-                {step === 2 && <p>📖 Bước 2: Đang học React</p>}
+                    <p
+                        style={{
+                            color:
+                                product.price > 1000000
+                                    ? "red"
+                                    : "black"
+                        }}
+                    >
+                        Giá:
+                        {product.price.toLocaleString()}đ
+                    </p>
 
-                {step === 3 && <p>🎯 Bước 3: Hiểu useState</p>}
+                </div>
 
-                {step === 4 && <p>🎉 Bước 4: Hoàn thành!</p>}
+            ))}
 
-            </div>
+
+            {/* Tổng giá */}
+            <h2>2️⃣ Tổng giá tất cả sản phẩm</h2>
+
+            <p>
+                Tổng tiền:
+                {total.toLocaleString()}đ
+            </p>
 
         </div>
     );
 }
 
-export default FlowDemo;
+export default ProductListDemo;
