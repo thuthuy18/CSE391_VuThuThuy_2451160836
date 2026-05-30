@@ -308,3 +308,182 @@ BUTTON
 | ------------------------------ | ---------------------- |
 | Không dùng `stopPropagation()` | BUTTON → INNER → OUTER |
 | Có `stopPropagation()`         | BUTTON                 |
+
+# Câu C1 (8đ) — Debug DOM Code
+
+## ❌ Danh sách lỗi và cách sửa
+
+### 1. Sai event name (onclick)
+```javascript
+document.querySelector("#decrementBtn").addEventListener("onclick", function() {
+```
+
+✔ Sửa:
+```javascript
+document.querySelector("#decrementBtn").addEventListener("click", function() {
+```
+
+---
+
+### 2. Gán sai DOM element
+```javascript
+countDisplay = count;
+```
+
+✔ Sửa:
+```javascript
+countDisplay.textContent = count;
+```
+
+---
+
+### 3. Reset history sai
+```javascript
+historyList.innerHTML = null;
+```
+
+✔ Sửa:
+```javascript
+historyList.innerHTML = "";
+```
+
+---
+
+### 4. localStorage trả string
+```javascript
+count = localStorage.getItem("count");
+```
+
+✔ Sửa:
+```javascript
+count = Number(localStorage.getItem("count")) || 0;
+```
+
+---
+
+### 5. Sai remove trong clear history
+```javascript
+item.remove;
+```
+
+✔ Sửa:
+```javascript
+item.remove();
+```
+
+---
+
+### 6. innerHTML không cần thiết
+```javascript
+countDisplay.innerHTML = count;
+```
+
+✔ Sửa:
+```javascript
+countDisplay.textContent = count;
+```
+
+---
+
+### 7. deleteHistory tối ưu
+```javascript
+element.parentNode.removeChild(element);
+```
+
+✔ Sửa:
+```javascript
+element.remove();
+```
+
+---
+
+## ✅ Code đã sửa
+
+```javascript
+const countDisplay = document.querySelector(".count");
+const historyList = document.getElementById("history");
+
+let count = 0;
+
+document.querySelector("#incrementBtn").addEventListener("click", function() {
+
+    count++;
+    countDisplay.textContent = count;
+
+    const li = document.createElement("li");
+    li.textContent = "Count changed to " + count;
+
+    li.addEventListener("click", function() {
+        deleteHistory(this);
+    });
+
+    historyList.appendChild(li);
+});
+
+document.querySelector("#decrementBtn").addEventListener("click", function() {
+    count--;
+    countDisplay.textContent = count;
+});
+
+document.querySelector("#resetBtn").addEventListener("click", () => {
+    count = 0;
+    countDisplay.textContent = count;
+    historyList.innerHTML = "";
+});
+
+function deleteHistory(element) {
+    element.remove();
+}
+
+document.querySelector("#clearHistory").addEventListener("click", () => {
+    const items = historyList.querySelectorAll("li");
+    items.forEach(item => item.remove());
+});
+
+window.addEventListener("beforeunload", () => {
+    localStorage.setItem("count", count);
+    localStorage.setItem("history", historyList.innerHTML);
+});
+
+window.addEventListener("load", () => {
+    count = Number(localStorage.getItem("count")) || 0;
+    countDisplay.textContent = count;
+});
+```
+
+---
+
+# Câu C2 (7đ) — Performance
+
+## 1. Event Binding vs Event Delegation
+
+- Binding 1000 events → tốn memory + chậm render
+- Event Delegation → 1 event ở parent
+
+```javascript
+container.addEventListener("click", (e) => {
+    if (e.target.classList.contains("item")) {
+        console.log("clicked");
+    }
+});
+```
+
+## 2. DocumentFragment
+
+### ❌ Bad:
+1000 lần append → 1000 reflow
+
+### ✅ Good:
+```javascript
+const fragment = document.createDocumentFragment();
+
+for (let i = 0; i < 1000; i++) {
+    const div = document.createElement("div");
+    div.textContent = `Item ${i}`;
+    fragment.appendChild(div);
+}
+
+document.body.appendChild(fragment);
+```
+
+✔ Chỉ 1 lần reflow → nhanh hơn nhiều
