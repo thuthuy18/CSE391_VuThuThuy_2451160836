@@ -487,3 +487,9 @@ document.body.appendChild(fragment);
 ```
 
 ✔ Chỉ 1 lần reflow → nhanh hơn nhiều
+
+---
+
+## Video
+
+link PBT_09:https://drive.google.com/file/d/1QWAS2BjLQfzS0xyQkfgBNmTonb8Xm9PT/view?usp=sharing

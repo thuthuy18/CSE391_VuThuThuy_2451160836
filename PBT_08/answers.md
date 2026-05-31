@@ -522,3 +522,9 @@ console.log(
 | Mục đích | Học thuật / hiểu cơ chế | Production |
 | API surface | Giống chuẩn (value, index, array) | Đầy đủ + `thisArg` |
 | Immutability | ✅ Không mutate mảng gốc | ✅ |
+
+---
+
+## Video
+
+link video PBT_08:https://drive.google.com/file/d/1gnMy8whe-vShYkzgVqAKxOkzdBTfe8qd/view?usp=sharing
