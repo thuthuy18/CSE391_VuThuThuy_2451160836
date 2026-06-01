@@ -2,25 +2,89 @@ import { useState } from "react";
 
 function App() {
 
-    const [name, setName] = useState("");
+    const [formData, setFormData] = useState({
 
-    const [age, setAge] = useState("");
+        name: "",
 
-    const [email, setEmail] = useState("");
+        email: "",
 
-    const [isStudent, setIsStudent] = useState(false);
+        password: "",
+
+        confirmPassword: "",
+
+        message: ""
+
+    });
 
     const [submitted, setSubmitted] = useState(false);
 
-    function handleSubmit() {
+    const [errors, setErrors] = useState({});
+
+    function handleChange(event) {
+
+        const { name, value } = event.target;
+
+        setFormData({
+
+            ...formData,
+
+            [name]: value
+
+        });
+
+    }
+
+    function validateField(name, value) {
+
+        let newErrors = { ...errors };
+
+        // Validate email
+        if (name === "email") {
+
+            if (!value.includes("@")) {
+
+                newErrors.email = "Email phải có ký tự @";
+
+            } else {
+
+                delete newErrors.email;
+
+            }
+
+        }
+
+        // Validate confirm password
+        if (name === "confirmPassword") {
+
+            if (value !== formData.password) {
+
+                newErrors.confirmPassword = "Mật khẩu không khớp";
+
+            } else {
+
+                delete newErrors.confirmPassword;
+
+            }
+
+        }
+
+        setErrors(newErrors);
+
+    }
+
+    function handleSubmit(event) {
+
+        event.preventDefault();
 
         if (
 
-            name.trim() === "" ||
+            formData.name === "" ||
 
-            age === "" ||
+            formData.email === "" ||
 
-            email.trim() === ""
+            formData.password === "" ||
+
+            formData.confirmPassword === ""
 
         ) {
 
@@ -30,10 +94,9 @@ function App() {
 
         }
 
-        // Validate tuổi
-        if (age <= 0 || age >= 100) {
+        if (Object.keys(errors).length > 0) {
 
-            alert("Tuổi phải từ 1 đến 99!");
+            alert("Form còn lỗi!");
 
             return;
 
@@ -45,13 +108,21 @@ function App() {
 
     function handleReset() {
 
-        setName("");
+        setFormData({
 
-        setAge("");
+            name: "",
 
-        setEmail("");
+            email: "",
 
-        setIsStudent(false);
+            password: "",
+
+            confirmPassword: "",
+
+            message: ""
+
+        });
+
+        setErrors({});
 
         setSubmitted(false);
 
@@ -59,167 +130,210 @@ function App() {
 
     return (
 
-        <div
-            style={{
-                padding: "20px"
-            }}
-        >
+        <div style={{ padding: "20px" }}>
 
-            <h2>Form đăng ký</h2>
+            <h2>Form Events</h2>
 
-            {!submitted ? (
+            {
 
-                <div>
+                !submitted ? (
 
-                    {/* Input tên */}
-                    <div
-                        style={{
-                            marginBottom: "10px"
-                        }}
-                    >
+                    <form onSubmit={handleSubmit}>
 
-                        <label>Tên: </label>
+                        <div style={{ marginBottom: "10px" }}>
 
-                        <input
-
-                            value={name}
-
-                            onChange={(e) => setName(e.target.value)}
-
-                        />
-
-                    </div>
-
-                    {/* Thử thách 3 */}
-                    {name && (
-
-                        <p>
-
-                            👋 Xin chào {name}!
-
-                        </p>
-
-                    )}
-
-                    {/* Input tuổi */}
-                    <div
-                        style={{
-                            marginBottom: "10px"
-                        }}
-                    >
-
-                        <label>Tuổi: </label>
-
-                        <input
-
-                            type="number"
-
-                            value={age}
-
-                            onChange={(e) => setAge(e.target.value)}
-
-                        />
-
-                    </div>
-
-                    {/* Thử thách 1 */}
-                    <div
-                        style={{
-                            marginBottom: "10px"
-                        }}
-                    >
-
-                        <label>Email: </label>
-
-                        <input
-
-                            value={email}
-
-                            onChange={(e) => setEmail(e.target.value)}
-
-                        />
-
-                    </div>
-
-                    {/* Checkbox */}
-                    <div
-                        style={{
-                            marginBottom: "10px"
-                        }}
-                    >
-
-                        <label>
+                            <label>Tên: </label>
 
                             <input
 
-                                type="checkbox"
+                                name="name"
 
-                                checked={isStudent}
+                                value={formData.name}
 
-                                onChange={(e) => setIsStudent(e.target.checked)}
+                                onChange={(e) => {
+
+                                    handleChange(e);
+
+                                    validateField(
+                                        e.target.name,
+                                        e.target.value
+                                    );
+
+                                }}
 
                             />
 
-                            Là sinh viên
+                        </div>
 
-                        </label>
+                        <div style={{ marginBottom: "10px" }}>
+
+                            <label>Email: </label>
+
+                            <input
+
+                                name="email"
+
+                                value={formData.email}
+
+                                onChange={(e) => {
+
+                                    handleChange(e);
+
+                                    validateField(
+                                        e.target.name,
+                                        e.target.value
+                                    );
+
+                                }}
+
+                            />
+
+                            {
+
+                                errors.email && (
+
+                                    <p style={{ color: "red" }}>
+
+                                        {errors.email}
+
+                                    </p>
+
+                                )
+
+                            }
+
+                        </div>
+
+                        <div style={{ marginBottom: "10px" }}>
+
+                            <label>Mật khẩu: </label>
+
+                            <input
+
+                                type="password"
+
+                                name="password"
+
+                                value={formData.password}
+
+                                onChange={handleChange}
+
+                            />
+
+                        </div>
+
+                        <div style={{ marginBottom: "10px" }}>
+
+                            <label>Xác nhận mật khẩu: </label>
+
+                            <input
+
+                                type="password"
+
+                                name="confirmPassword"
+
+                                value={formData.confirmPassword}
+
+                                onChange={(e) => {
+
+                                    handleChange(e);
+
+                                    validateField(
+                                        e.target.name,
+                                        e.target.value
+                                    );
+
+                                }}
+
+                            />
+
+                            {
+
+                                errors.confirmPassword && (
+
+                                    <p style={{ color: "red" }}>
+
+                                        {errors.confirmPassword}
+
+                                    </p>
+
+                                )
+
+                            }
+
+                        </div>
+
+                        <div style={{ marginBottom: "10px" }}>
+
+                            <label>Tin nhắn: </label>
+
+                            <textarea
+
+                                name="message"
+
+                                value={formData.message}
+
+                                onChange={handleChange}
+
+                                rows={4}
+
+                                style={{ width: "100%" }}
+
+                            />
+
+                        </div>
+
+                        <button type="submit">
+
+                            Gửi
+
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleReset}
+                        >
+
+                            Xóa
+
+                        </button>
+
+                    </form>
+
+                ) : (
+
+                    <div
+                        style={{
+                            background: "#d4edda",
+                            padding: "15px",
+                            borderRadius: "4px"
+                        }}
+                    >
+
+                        <h3>✅ Đăng ký thành công!</h3>
+
+                        <p>Tên: {formData.name}</p>
+
+                        <p>Email: {formData.email}</p>
+
+                        <p>Tin nhắn: {formData.message}</p>
+
+                        <button onClick={handleReset}>
+
+                            Gửi lại
+
+                        </button>
 
                     </div>
 
-                    <button onClick={handleSubmit}>
+                )
 
-                        Đăng ký
-
-                    </button>
-
-                </div>
-
-            ) : (
-
-                <div
-                    style={{
-                        background: "#d4edda",
-                        padding: "15px",
-                        borderRadius: "4px"
-                    }}
-                >
-
-                    <h3>✅ Đăng ký thành công!</h3>
-
-                    <p>Tên: {name}</p>
-
-                    <p>Tuổi: {age}</p>
-
-                    <p>Email: {email}</p>
-
-                    <p>
-
-                        Sinh viên:
-
-                        {
-
-                            isStudent
-                                ? " Có"
-
-                                : " Không"
-
-                        }
-
-                    </p>
-
-                    <button onClick={handleReset}>
-
-                        Đăng ký lại
-
-                    </button>
-
-                </div>
-
-            )}
+            }
 
         </div>
 
     );
+
 }
 
 export default App;
