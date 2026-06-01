@@ -1,339 +1,274 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import TodoItem from "./components/TodoItem";
+import TodoFilter from "./components/TodoFilter";
 
 function App() {
 
-    const [formData, setFormData] = useState({
+    // ===== STATE =====
+    const [todos, setTodos] = useState([]);
 
-        name: "",
+    const [inputValue, setInputValue] = useState("");
 
-        email: "",
+    const [filter, setFilter] = useState("all");
 
-        password: "",
+    // State sửa todo
+    const [editingId, setEditingId] = useState(null);
 
-        confirmPassword: "",
+    const [editText, setEditText] = useState("");
 
-        message: ""
+    // ===== LOAD LOCALSTORAGE =====
+    useEffect(() => {
 
+        const savedTodos =
+            JSON.parse(localStorage.getItem("todos"));
+
+        if (savedTodos) {
+            setTodos(savedTodos);
+        }
+
+    }, []);
+
+    // ===== SAVE LOCALSTORAGE =====
+    useEffect(() => {
+
+        localStorage.setItem(
+            "todos",
+            JSON.stringify(todos)
+        );
+
+    }, [todos]);
+
+    // ===== PLACEHOLDER ĐỘNG =====
+    let placeholderText = "Nhập công việc...";
+
+    if (filter === "active") {
+        placeholderText = "Thêm việc chưa hoàn thành...";
+    }
+
+    if (filter === "completed") {
+        placeholderText = "Xem việc đã hoàn thành...";
+    }
+
+    // ===== THÊM TODO =====
+    function addTodo() {
+
+        if (inputValue.trim() === "") return;
+
+        const newTodo = {
+            id: Date.now(),
+            text: inputValue,
+            done: false,
+            createdAt: new Date().toLocaleString()
+        };
+
+        setTodos([...todos, newTodo]);
+
+        setInputValue("");
+    }
+
+    // ===== ENTER =====
+    function handleKeyPress(event) {
+
+        if (event.key === "Enter") {
+            addTodo();
+        }
+    }
+
+    // ===== TOGGLE =====
+    function toggleTodo(id) {
+
+        setTodos(
+            todos.map(todo =>
+                todo.id === id
+                    ? { ...todo, done: !todo.done }
+                    : todo
+            )
+        );
+    }
+
+    // ===== DELETE =====
+    function deleteTodo(id) {
+
+        setTodos(
+            todos.filter(todo => todo.id !== id)
+        );
+    }
+
+    // ===== BẮT ĐẦU SỬA =====
+    function startEdit(todo) {
+
+        setEditingId(todo.id);
+
+        setEditText(todo.text);
+    }
+
+    // ===== LƯU SỬA =====
+    function saveEdit(id) {
+
+        if (editText.trim() === "") return;
+
+        setTodos(
+            todos.map(todo =>
+                todo.id === id
+                    ? { ...todo, text: editText }
+                    : todo
+            )
+        );
+
+        setEditingId(null);
+
+        setEditText("");
+    }
+
+    // ===== HỦY SỬA =====
+    function cancelEdit() {
+
+        setEditingId(null);
+
+        setEditText("");
+    }
+
+    // ===== FILTER =====
+    const filteredTodos = todos.filter(todo => {
+
+        if (filter === "active") {
+            return !todo.done;
+        }
+
+        if (filter === "completed") {
+            return todo.done;
+        }
+
+        return true;
     });
 
-    const [submitted, setSubmitted] = useState(false);
+    // ===== COUNT =====
+    const activeCount =
+        todos.filter(todo => !todo.done).length;
 
-    const [errors, setErrors] = useState({});
+    const completedCount =
+        todos.filter(todo => todo.done).length;
 
-    function handleChange(event) {
-
-        const { name, value } = event.target;
-
-        setFormData({
-
-            ...formData,
-
-            [name]: value
-
-        });
-
-    }
-
-    function validateField(name, value) {
-
-        let newErrors = { ...errors };
-
-        // Validate email
-        if (name === "email") {
-
-            if (!value.includes("@")) {
-
-                newErrors.email = "Email phải có ký tự @";
-
-            } else {
-
-                delete newErrors.email;
-
-            }
-
-        }
-
-        // Validate confirm password
-        if (name === "confirmPassword") {
-
-            if (value !== formData.password) {
-
-                newErrors.confirmPassword = "Mật khẩu không khớp";
-
-            } else {
-
-                delete newErrors.confirmPassword;
-
-            }
-
-        }
-
-        setErrors(newErrors);
-
-    }
-
-    function handleSubmit(event) {
-
-        event.preventDefault();
-
-        if (
-
-            formData.name === "" ||
-
-            formData.email === "" ||
-
-            formData.password === "" ||
-
-            formData.confirmPassword === ""
-
-        ) {
-
-            alert("Vui lòng nhập đầy đủ thông tin!");
-
-            return;
-
-        }
-
-        if (Object.keys(errors).length > 0) {
-
-            alert("Form còn lỗi!");
-
-            return;
-
-        }
-
-        setSubmitted(true);
-
-    }
-
-    function handleReset() {
-
-        setFormData({
-
-            name: "",
-
-            email: "",
-
-            password: "",
-
-            confirmPassword: "",
-
-            message: ""
-
-        });
-
-        setErrors({});
-
-        setSubmitted(false);
-
-    }
+    const totalTodos = todos.length;
 
     return (
+        <div style={{
+            maxWidth: "500px",
+            margin: "0 auto",
+            padding: "20px",
+            fontFamily: "Arial"
+        }}>
+
+            <h1 style={{ textAlign: "center" }}>
+                📋 Todo App
+            </h1>
+
+            {/* INPUT */}
+            <div style={{
+                display: "flex",
+                marginBottom: "20px"
+            }}>
+
+                <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) =>
+                        setInputValue(e.target.value)
+                    }
+                    onKeyDown={handleKeyPress}
+                    placeholder={placeholderText}
+                    style={{
+                        flex: 1,
+                        padding: "10px",
+                        border: "2px solid #ddd",
+                        borderRadius: "4px 0 0 4px"
+                    }}
+                />
+
+                <button
+                    onClick={addTodo}
+                    style={{
+                        padding: "10px 20px",
+                        background: "#3498db",
+                        color: "white",
+                        border: "none",
+                        cursor: "pointer"
+                    }}
+                >
+                    Thêm
+                </button>
+
+            </div>
+
+            {/* FILTER */}
+            <TodoFilter
+                filter={filter}
+                setFilter={setFilter}
+            />
+
+            {/* LIST */}
+            {filteredTodos.length === 0 ? (
+
+                <div style={{
+                    textAlign: "center",
+                    padding: "20px",
+                    color: "#999"
+                }}>
+                    Không có công việc
+                </div>
+
+            ) : (
+
+                filteredTodos.map(todo => (
+
+                    <TodoItem
+                        key={todo.id}
+                        todo={todo}
+                        onToggle={toggleTodo}
+                        onDelete={deleteTodo}
+                        editingId={editingId}
+                        editText={editText}
+                        setEditText={setEditText}
+                        onStartEdit={startEdit}
+                        onSaveEdit={saveEdit}
+                        onCancelEdit={cancelEdit}
+                    />
+
+                ))
+
+            )}
+
+            {/* FOOTER */}
+            {todos.length > 0 && (
+
+                <div style={{
+                    marginTop: "20px",
+                    padding: "15px",
+                    background: "#f9f9f9",
+                    borderRadius: "4px"
+                }}>
+
+                    <p>
+                        📌 Tổng số công việc:
+                        {totalTodos}
+                    </p>
+
+                    <p>
+                        ⏳ Chưa hoàn thành:
+                        {activeCount}
+                    </p>
 
-        <div style={{ padding: "20px" }}>
+                    <p>
+                        ✅ Đã hoàn thành:
+                        {completedCount}
+                    </p>
 
-            <h2>Form Events</h2>
+                </div>
 
-            {
-
-                !submitted ? (
-
-                    <form onSubmit={handleSubmit}>
-
-                        <div style={{ marginBottom: "10px" }}>
-
-                            <label>Tên: </label>
-
-                            <input
-
-                                name="name"
-
-                                value={formData.name}
-
-                                onChange={(e) => {
-
-                                    handleChange(e);
-
-                                    validateField(
-                                        e.target.name,
-                                        e.target.value
-                                    );
-
-                                }}
-
-                            />
-
-                        </div>
-
-                        <div style={{ marginBottom: "10px" }}>
-
-                            <label>Email: </label>
-
-                            <input
-
-                                name="email"
-
-                                value={formData.email}
-
-                                onChange={(e) => {
-
-                                    handleChange(e);
-
-                                    validateField(
-                                        e.target.name,
-                                        e.target.value
-                                    );
-
-                                }}
-
-                            />
-
-                            {
-
-                                errors.email && (
-
-                                    <p style={{ color: "red" }}>
-
-                                        {errors.email}
-
-                                    </p>
-
-                                )
-
-                            }
-
-                        </div>
-
-                        <div style={{ marginBottom: "10px" }}>
-
-                            <label>Mật khẩu: </label>
-
-                            <input
-
-                                type="password"
-
-                                name="password"
-
-                                value={formData.password}
-
-                                onChange={handleChange}
-
-                            />
-
-                        </div>
-
-                        <div style={{ marginBottom: "10px" }}>
-
-                            <label>Xác nhận mật khẩu: </label>
-
-                            <input
-
-                                type="password"
-
-                                name="confirmPassword"
-
-                                value={formData.confirmPassword}
-
-                                onChange={(e) => {
-
-                                    handleChange(e);
-
-                                    validateField(
-                                        e.target.name,
-                                        e.target.value
-                                    );
-
-                                }}
-
-                            />
-
-                            {
-
-                                errors.confirmPassword && (
-
-                                    <p style={{ color: "red" }}>
-
-                                        {errors.confirmPassword}
-
-                                    </p>
-
-                                )
-
-                            }
-
-                        </div>
-
-                        <div style={{ marginBottom: "10px" }}>
-
-                            <label>Tin nhắn: </label>
-
-                            <textarea
-
-                                name="message"
-
-                                value={formData.message}
-
-                                onChange={handleChange}
-
-                                rows={4}
-
-                                style={{ width: "100%" }}
-
-                            />
-
-                        </div>
-
-                        <button type="submit">
-
-                            Gửi
-
-                        </button>
-
-                        <button
-                            type="button"
-                            onClick={handleReset}
-                        >
-
-                            Xóa
-
-                        </button>
-
-                    </form>
-
-                ) : (
-
-                    <div
-                        style={{
-                            background: "#d4edda",
-                            padding: "15px",
-                            borderRadius: "4px"
-                        }}
-                    >
-
-                        <h3>✅ Đăng ký thành công!</h3>
-
-                        <p>Tên: {formData.name}</p>
-
-                        <p>Email: {formData.email}</p>
-
-                        <p>Tin nhắn: {formData.message}</p>
-
-                        <button onClick={handleReset}>
-
-                            Gửi lại
-
-                        </button>
-
-                    </div>
-
-                )
-
-            }
+            )}
 
         </div>
-
     );
-
 }
 
 export default App;
