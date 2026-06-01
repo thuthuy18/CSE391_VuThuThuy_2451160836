@@ -1,68 +1,221 @@
-import ProductCard from "./components/ProductCard";
+import { useState } from "react";
 
 function App() {
 
-    const products = [
+    const [name, setName] = useState("");
 
-        {
-            id: 1,
-            name: "iPhone 15",
-            price: "25.000.000",
-            image: "https://via.placeholder.com/200"
-        },
+    const [age, setAge] = useState("");
 
-        {
-            id: 2,
-            name: "Samsung S24",
-            price: "22.000.000",
-            image: "https://via.placeholder.com/200"
-        },
+    const [email, setEmail] = useState("");
 
-        {
-            id: 3,
-            name: "Xiaomi 14",
-            price: "15.000.000",
-            image: "https://via.placeholder.com/200"
+    const [isStudent, setIsStudent] = useState(false);
+
+    const [submitted, setSubmitted] = useState(false);
+
+    function handleSubmit() {
+
+        if (
+
+            name.trim() === "" ||
+
+            age === "" ||
+
+            email.trim() === ""
+
+        ) {
+
+            alert("Vui lòng nhập đầy đủ thông tin!");
+
+            return;
+
         }
 
-    ];
+        // Validate tuổi
+        if (age <= 0 || age >= 100) {
+
+            alert("Tuổi phải từ 1 đến 99!");
+
+            return;
+
+        }
+
+        setSubmitted(true);
+
+    }
+
+    function handleReset() {
+
+        setName("");
+
+        setAge("");
+
+        setEmail("");
+
+        setIsStudent(false);
+
+        setSubmitted(false);
+
+    }
 
     return (
 
-        <div>
+        <div
+            style={{
+                padding: "20px"
+            }}
+        >
 
-            <h1
-                style={{
-                    textAlign: "center"
-                }}
-            >
-                Cửa hàng điện thoại
-            </h1>
+            <h2>Form đăng ký</h2>
 
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center"
-                }}
-            >
+            {!submitted ? (
 
-                {products.map(product => (
+                <div>
 
-                    <ProductCard
+                    {/* Input tên */}
+                    <div
+                        style={{
+                            marginBottom: "10px"
+                        }}
+                    >
 
-                        key={product.id}
+                        <label>Tên: </label>
 
-                        name={product.name}
+                        <input
 
-                        price={product.price}
+                            value={name}
 
-                        image={product.image}
+                            onChange={(e) => setName(e.target.value)}
 
-                    />
+                        />
 
-                ))}
+                    </div>
 
-            </div>
+                    {/* Thử thách 3 */}
+                    {name && (
+
+                        <p>
+
+                            👋 Xin chào {name}!
+
+                        </p>
+
+                    )}
+
+                    {/* Input tuổi */}
+                    <div
+                        style={{
+                            marginBottom: "10px"
+                        }}
+                    >
+
+                        <label>Tuổi: </label>
+
+                        <input
+
+                            type="number"
+
+                            value={age}
+
+                            onChange={(e) => setAge(e.target.value)}
+
+                        />
+
+                    </div>
+
+                    {/* Thử thách 1 */}
+                    <div
+                        style={{
+                            marginBottom: "10px"
+                        }}
+                    >
+
+                        <label>Email: </label>
+
+                        <input
+
+                            value={email}
+
+                            onChange={(e) => setEmail(e.target.value)}
+
+                        />
+
+                    </div>
+
+                    {/* Checkbox */}
+                    <div
+                        style={{
+                            marginBottom: "10px"
+                        }}
+                    >
+
+                        <label>
+
+                            <input
+
+                                type="checkbox"
+
+                                checked={isStudent}
+
+                                onChange={(e) => setIsStudent(e.target.checked)}
+
+                            />
+
+                            Là sinh viên
+
+                        </label>
+
+                    </div>
+
+                    <button onClick={handleSubmit}>
+
+                        Đăng ký
+
+                    </button>
+
+                </div>
+
+            ) : (
+
+                <div
+                    style={{
+                        background: "#d4edda",
+                        padding: "15px",
+                        borderRadius: "4px"
+                    }}
+                >
+
+                    <h3>✅ Đăng ký thành công!</h3>
+
+                    <p>Tên: {name}</p>
+
+                    <p>Tuổi: {age}</p>
+
+                    <p>Email: {email}</p>
+
+                    <p>
+
+                        Sinh viên:
+
+                        {
+
+                            isStudent
+                                ? " Có"
+
+                                : " Không"
+
+                        }
+
+                    </p>
+
+                    <button onClick={handleReset}>
+
+                        Đăng ký lại
+
+                    </button>
+
+                </div>
+
+            )}
 
         </div>
 
