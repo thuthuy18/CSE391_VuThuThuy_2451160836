@@ -1,109 +1,72 @@
-function ProductListDemo() {
+import ProductCard from "./components/ProductCard";
 
-    // =========================
-    // Danh sách sản phẩm
-    // =========================
+function App() {
 
     const products = [
 
         {
             id: 1,
             name: "iPhone 15",
-            price: 25000000
+            price: "25.000.000",
+            image: "https://via.placeholder.com/200"
         },
 
         {
             id: 2,
-            name: "AirPods Pro",
-            price: 5000000
+            name: "Samsung S24",
+            price: "22.000.000",
+            image: "https://via.placeholder.com/200"
         },
 
         {
             id: 3,
-            name: "Chuột Gaming",
-            price: 500000
-        },
-
-        {
-            id: 4,
-            name: "Laptop Dell",
-            price: 30000000
-        },
-
-        {
-            id: 5,
-            name: "Bàn phím cơ",
-            price: 1500000
+            name: "Xiaomi 14",
+            price: "15.000.000",
+            image: "https://via.placeholder.com/200"
         }
 
     ];
 
-
-    // =========================
-    // Tính tổng giá
-    // =========================
-
-    const total = products.reduce(
-
-        (sum, product) => sum + product.price,
-
-        0
-
-    );
-
-
     return (
-        <div style={{ padding: "20px" }}>
 
-            <h1>📝 Product List Rendering</h1>
+        <div>
 
+            <h1
+                style={{
+                    textAlign: "center"
+                }}
+            >
+                Cửa hàng điện thoại
+            </h1>
 
-            {/* Danh sách sản phẩm */}
-            <h2>1️⃣ Danh sách sản phẩm</h2>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center"
+                }}
+            >
 
-            {products.map(product => (
+                {products.map(product => (
 
-                <div
-                    key={product.id}
-                    style={{
-                        border: "1px solid #ddd",
-                        padding: "10px",
-                        marginBottom: "10px"
-                    }}
-                >
+                    <ProductCard
 
-                    <p>
-                        Tên sản phẩm:
-                        {product.name}
-                    </p>
+                        key={product.id}
 
-                    <p
-                        style={{
-                            color:
-                                product.price > 1000000
-                                    ? "red"
-                                    : "black"
-                        }}
-                    >
-                        Giá:
-                        {product.price.toLocaleString()}đ
-                    </p>
+                        name={product.name}
 
-                </div>
+                        price={product.price}
 
-            ))}
+                        image={product.image}
 
+                    />
 
-            {/* Tổng giá */}
-            <h2>2️⃣ Tổng giá tất cả sản phẩm</h2>
+                ))}
 
-            <p>
-                Tổng tiền:
-                {total.toLocaleString()}đ
-            </p>
+            </div>
 
         </div>
+
     );
 }
 
-export default ProductListDemo;
+export default App;
